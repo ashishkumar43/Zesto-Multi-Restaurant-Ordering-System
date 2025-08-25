@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZestoEats - Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow p-4 login-card">
+      <div class="text-center mb-4">
+        <img src="img\zesto_logo.png" alt="ZestoEats Logo" class="logo">
+        <h5 class="mt-2">Registration</h5>
+        <p class="text-muted small">Enter the fields below to get started</p>
+      </div>
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" placeholder="Enter your Name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" placeholder="Enter your Email">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" placeholder="Enter your Phone Number">
+        </div>
+        <div class="mb-3 position-relative">
+          <label class="form-label">Password</label>
+          <input type="password" id="registerPassword" class="form-control" placeholder="Create Password">
+          <span class="toggle-password" onclick="togglePassword('registerPassword')">&#128065;</span>
+        </div>
+        <div class="mb-3">
+          <input type="checkbox" id="rememberReg"> <label for="rememberReg" class="small">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign in</button>
+        <div class="text-center my-3">Or continue with</div>
+        <div class="d-flex justify-content-center gap-3 social-login">
+          <a href="#"><img src="img\google.jpeg" alt="Google"></a>
+          <a href="#"><img src="img\apple.png" alt="Apple"></a>
+          <a href="#"><img src="img\facebook.jpeg" alt="Facebook"></a>
+        </div>
+        <p class="text-center small mt-3">Already have an account? <a href="signin.html">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
