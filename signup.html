@@ -18,19 +18,19 @@
       <form>
         <div class="mb-3">
           <label class="form-label">Name</label>
-          <input type="text" class="form-control" placeholder="Enter your Name">
+          <input type="text" class="form-control" placeholder="Enter your Name" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" placeholder="Enter your Email">
+          <input type="email" class="form-control" placeholder="Enter your Email" required >
         </div>
         <div class="mb-3">
           <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" placeholder="Enter your Phone Number">
+          <input type="tel" class="form-control" placeholder="Enter your Phone Number" required minlength="10">
         </div>
         <div class="mb-3 position-relative">
           <label class="form-label">Password</label>
-          <input type="password" id="registerPassword" class="form-control" placeholder="Create Password">
+          <input type="password" id="registerPassword" class="form-control" placeholder="Create Password" required minlength="8">
           <span class="toggle-password" onclick="togglePassword('registerPassword')">&#128065;</span>
         </div>
         <div class="mb-3">

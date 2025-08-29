@@ -1,0 +1,41 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+}
+
+.login-card {
+  max-width: 400px;
+  border-radius: 20px;
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+.btn-primary {
+  background-color: #ff4d00;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #e64300;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 70%;
+  cursor: pointer;
+  font-size: 18px;
+  color: #777;
+}
+
+.social-login img {
+  width: 32px;
+  height: 32px;
+}
