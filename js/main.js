@@ -149,12 +149,8 @@
 
 })(jQuery);
 
- document.getElementById('add-to-cart').onclick = function(e) {
-      e.preventDefault(); 
-      const product = {
-        name: 'Product Name', 
-        price: '$4.99 / kg'
-      };
-      localStorage.setItem('product', JSON.stringify(product));
-      window.location.href = 'cart.html';
-};
+
+let count=4;
+ function increaseCount(){
+    document.getElementById("addtocart").innerHTML=count++;
+}
