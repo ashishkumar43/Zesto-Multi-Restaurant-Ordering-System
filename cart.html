@@ -55,7 +55,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">🍴ZestoEats</h1></a>
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">ðŸ´ZestoEats</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -137,7 +137,7 @@
                             <th scope="col">Handle</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="cart-items">
                             <tr>
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
@@ -251,8 +251,8 @@
                     </table>
                 </div>
                 <div class="mt-5">
-                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+                    <input id="couponInput" type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" aria-label="Coupon Code">
+                    <button id="applyCouponbtn"class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
                 </div>
                 <div class="row g-4 justify-content-end">
                     <div class="col-8"></div>
@@ -270,13 +270,13 @@
                                         <p class="mb-0">Flat rate: $3.00</p>
                                     </div>
                                 </div>
-                                <p class="mb-0 text-end">Shipping to Ukraine.</p>
+                                <p class="mb-0 text-end">Shipping to Chandigarh.</p>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
                                 <p class="mb-0 pe-4">$99.00</p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button"><a href="checkout.html">Proceed Checkout</a></button>
                         </div>
                     </div>
                 </div>
@@ -366,8 +366,8 @@
                         <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
                     </div>
                     <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** This template is free as long as you keep the below authorâ€™s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below authorâ€™s credit link/attribution link/backlink, ***/-->
                         <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
                         Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
                     </div>
@@ -394,4 +394,3 @@
     <script src="js/main.js"></script>
     </body>
 
-</html>

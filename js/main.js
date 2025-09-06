@@ -154,3 +154,115 @@ let count=4;
  function increaseCount(){
     document.getElementById("addtocart").innerHTML=count++;
 }
+
+
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function addToCart(product) {
+  let cart = getCart();
+  let existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push(product);
+  }
+  saveCart(cart);
+}
+
+function updateCartItem(index, change) {
+  let cart = getCart();
+  if (!cart[index]) return;
+  cart[index].quantity += change;
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+  saveCart(cart);
+  loadCart();
+}
+
+function removeCartItem(index) {
+  let cart = getCart();
+  cart.splice(index, 1);
+  saveCart(cart);
+  loadCart();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+
+      let container = btn.closest(".fruite-item");
+      let product = {
+        name: container.querySelector("h4").innerText,
+        price: parseFloat(container.querySelector(".fw-bold").innerText.replace("$", "")),
+        image: container.querySelector("img").src,
+        quantity: 1
+      };
+
+      addToCart(product);
+      alert(product.name + " added to cart!");
+    });
+  });
+
+  if (document.getElementById("cart-items")) {
+    loadCart();
+  }
+});
+
+function loadCart() {
+  let cart = getCart();
+  let cartItems = document.getElementById("cart-items");
+
+  cartItems.querySelectorAll("tr.dynamic-row").forEach(row => row.remove());
+
+  cart.forEach((item, index) => {
+    let row = document.createElement("tr");
+    row.classList.add("dynamic-row");
+
+    row.innerHTML = `
+      <th scope="row">
+        <div class="d-flex align-items-center">
+          <img src="${item.image}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+        </div>
+      </th>
+      <td><p class="mb-0 mt-4">${item.name}</p></td>
+      <td><p class="mb-0 mt-4">${item.price.toFixed(2)} $</p></td>
+      <td>
+        <div class="input-group quantity mt-4" style="width: 100px;">
+          <button class="btn btn-sm btn-minus rounded-circle bg-light border" data-action="minus" data-index="${index}">
+            <i class="fa fa-minus"></i>
+          </button>
+          <input type="text" class="form-control form-control-sm text-center border-0" value="${item.quantity}" readonly>
+          <button class="btn btn-sm btn-plus rounded-circle bg-light border" data-action="plus" data-index="${index}">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </td>
+      <td><p class="mb-0 mt-4">${(item.price * item.quantity).toFixed(2)} $</p></td>
+      <td>
+        <button class="btn btn-md rounded-circle bg-light border mt-4" data-action="remove" data-index="${index}">
+          <i class="fa fa-times text-danger"></i>
+        </button>
+      </td>
+    `;
+    cartItems.appendChild(row);
+  });
+  
+  cartItems.querySelectorAll("[data-action]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      let index = parseInt(btn.getAttribute("data-index"));
+      let action = btn.getAttribute("data-action");
+
+      if (action === "plus") updateCartItem(index, 1);
+      if (action === "minus") updateCartItem(index, -1);
+      if (action === "remove") removeCartItem(index);
+    });
+  });
+}
