@@ -155,7 +155,7 @@ let count=4;
     document.getElementById("addtocart").innerHTML=count++;
 }
 
-
+// Cart functionality with dynamic totals
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
@@ -193,6 +193,47 @@ function removeCartItem(index) {
   loadCart();
 }
 
+// Calculate cart totals
+function calculateCartTotals() {
+  let cart = getCart();
+  let subtotal = 0;
+  let shippingRate = 3.00; 
+  
+  cart.forEach(item => {
+    subtotal += item.price * item.quantity;
+  });
+  
+  let total = subtotal + shippingRate;
+  
+  return {
+    subtotal: subtotal,
+    shipping: shippingRate,
+    total: total
+  };
+}
+
+function updateCartTotals() {
+  let totals = calculateCartTotals();
+  
+  let subtotalElement = document.querySelector('.d-flex.justify-content-between.mb-4 p');
+  if (subtotalElement) {
+    subtotalElement.textContent = '$' + totals.subtotal.toFixed(2);
+  }
+  
+  // Update total
+  let totalElement = document.querySelector('.py-4.mb-4.border-top.border-bottom .mb-0.pe-4');
+  if (totalElement) {
+    totalElement.textContent = '$' + totals.total.toFixed(2);
+  }
+  
+  let cartCountElement = document.querySelector('.position-absolute.bg-secondary.rounded-circle');
+  if (cartCountElement) {
+    let cart = getCart();
+    let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountElement.textContent = totalItems;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-cart").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -208,17 +249,82 @@ document.addEventListener("DOMContentLoaded", () => {
 
       addToCart(product);
       alert(product.name + " added to cart!");
+      updateCartTotals(); 
     });
   });
 
   if (document.getElementById("cart-items")) {
     loadCart();
   }
+  
+  // Apply coupon functionality
+  let applyCouponBtn = document.getElementById("applyCouponbtn");
+  if (applyCouponBtn) {
+    applyCouponBtn.addEventListener("click", function() {
+      let couponInput = document.getElementById("couponInput");
+      let couponCode = couponInput.value.trim().toLowerCase();
+      
+      let coupons = {
+        'save10': { discount: 0.10, type: 'percentage' },
+        'save5': { discount: 5.00, type: 'fixed' },
+        'welcome': { discount: 0.15, type: 'percentage' }
+      };
+      
+      if (couponCode && coupons[couponCode]) {
+        applyCoupon(coupons[couponCode]);
+        alert('Coupon applied successfully!');
+        couponInput.value = '';
+      } else if (couponCode) {
+        alert('Invalid coupon code!');
+      } else {
+        alert('Please enter a coupon code!');
+      }
+    });
+  }
 });
+
+function applyCoupon(coupon) {
+  let cart = getCart();
+  let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  let discount = 0;
+  
+  if (coupon.type === 'percentage') {
+    discount = subtotal * coupon.discount;
+  } else {
+    discount = coupon.discount;
+  }
+  
+  let subtotalElement = document.querySelector('.d-flex.justify-content-between.mb-4 p');
+  let shippingSection = document.querySelector('.d-flex.justify-content-between:not(.mb-4)');
+
+  let existingDiscount = document.querySelector('.discount-row');
+  if (existingDiscount) {
+    existingDiscount.remove();
+  }
+
+  let discountRow = document.createElement('div');
+  discountRow.className = 'd-flex justify-content-between mb-4 discount-row';
+  discountRow.innerHTML = `
+    <h5 class="mb-0 me-4">Discount:</h5>
+    <p class="mb-0 text-success">-$${discount.toFixed(2)}</p>
+  `;
+  
+  if (shippingSection) {
+    shippingSection.parentNode.insertBefore(discountRow, shippingSection);
+  }
+  
+  // Update total
+  let total = subtotal - discount + 3.00; 
+  let totalElement = document.querySelector('.py-4.mb-4.border-top.border-bottom .mb-0.pe-4');
+  if (totalElement) {
+    totalElement.textContent = '$' + total.toFixed(2);
+  }
+}
 
 function loadCart() {
   let cart = getCart();
   let cartItems = document.getElementById("cart-items");
+
 
   cartItems.querySelectorAll("tr.dynamic-row").forEach(row => row.remove());
 
@@ -255,6 +361,7 @@ function loadCart() {
     cartItems.appendChild(row);
   });
   
+  // Add event listeners to cart buttons
   cartItems.querySelectorAll("[data-action]").forEach(btn => {
     btn.addEventListener("click", () => {
       let index = parseInt(btn.getAttribute("data-index"));
@@ -265,4 +372,6 @@ function loadCart() {
       if (action === "remove") removeCartItem(index);
     });
   });
+  
+  updateCartTotals();
 }
